@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Structures</title>
+</head>
+<body>
+
+    <script>
+        class order {
+            constructor() {
+                this.burger_count = randomBurgers();
+            }
+            randomBurgers() {
+                this.burger_count = Math.floor(Math.random() * 21);
+            }
+        }
+
+        class person {
+            constructor() {
+                this.customer_name = randomName();
+            }
+            randomName() {
+                let asCustomers = ["Jefe", "El Guapo", "Lucky Day", "Ned Nederlander", 
+                "Dusty Bottoms", "Harry Flugleman", "Carmen", "Invisible Swordsman", "Singing Bush"]
+                this.customer_name = asCustomers[Math.floor(Math.random() * asCustomers.length)];
+            }
+        }
+
+        class customer extends person {
+            constructor() {
+                super();
+                this.order = new order();
+            }
+        }
+    </script>
+</body>
+</html>
