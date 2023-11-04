@@ -6,25 +6,26 @@
     <title>Data Structures</title>
 </head>
 <body>
+    <button onclick="dataStruc()"></button>
 
     <script>
         class order {
             constructor() {
-                this.burger_count = randomBurgers();
+                this.burger_count = this.randomBurgers();
             }
             randomBurgers() {
-                this.burger_count = Math.floor(Math.random() * 21);
+                return Math.floor(Math.random() * 21);
             }
         }
 
         class person {
             constructor() {
-                this.customer_name = randomName();
+                this.customer_name = this.randomName();
             }
             randomName() {
-                let asCustomers = ["Jefe", "El Guapo", "Lucky Day", "Ned Nederlander", 
-                "Dusty Bottoms", "Harry Flugleman", "Carmen", "Invisible Swordsman", "Singing Bush"]
-                this.customer_name = asCustomers[Math.floor(Math.random() * asCustomers.length)];
+                let asCustomers = ["Jefe", "El Guapo", "Lucky Day", "Ned Nederlander",
+                    "Dusty Bottoms", "Harry Flugleman", "Carmen", "Invisible Swordsman", "Singing Bush"]
+                return asCustomers[Math.floor(Math.random() * asCustomers.length)];
             }
         }
 
@@ -34,20 +35,37 @@
                 this.order = new order();
             }
         }
+        function dataStruc() {
+            let line = [];
+            let CustomerOrders = [];
 
-        let line = [];
-        let CustomerOrders =[];
+            for (let iCount = 0; iCount < 100; iCount++) {
+                line.push(new customer());
 
-        for (let iCount = 0; iCount < 100; i++) {
-            line.push(new customer());
-        
-        }
-
-        for(let iCount =0; iCount < line.length; iCount++){
-            for(let iOrder =0; iOrder < CustomerOrders.length; iOrder++){
-                
             }
-            CustomerOrders.push([line[iCount].customer_name, line[iCount].order.burger_count]);
+
+            CustomerOrders.push([line[0].customer_name, line[0].order.burger_count]);
+
+            for (let iCount = 0; iCount < line.length; iCount++) {
+                let bNew = true;
+                for (let iOrder = 0; iOrder < CustomerOrders.length; iOrder++) {
+                    if (line[iCount].customer_name === CustomerOrders[iOrder][0]) {
+                        CustomerOrders[iOrder][1] += line[iCount].order.burger_count;
+                        bNew = false;
+                        break;
+                    }
+
+                }
+                if (bNew === true) CustomerOrders.push([line[iCount].customer_name, line[iCount].order.burger_count]);
+            }
+
+            CustomerOrders.sort((iBurgers1, iBurgers2) => {
+                return iBurgers2[1] - iBurgers1[1]
+            })
+
+            for (let iOrder = 0; iOrder < CustomerOrders.length; iOrder++) {
+                console.log(CustomerOrders[iOrder]);
+            }
         }
     </script>
 </body>
