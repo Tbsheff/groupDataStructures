@@ -6,7 +6,13 @@
     <title>Data Structures</title>
 </head>
 <body>
-    <button onclick="dataStruc()"></button>
+    <button onclick="dataStruc()">Order Burgers</button>
+
+    <div style="display: flex; flex-direction:row; gap:6rem;">
+        <p id="outputNames"></p>
+        <p id="outputOrders"></p>
+    </div>
+
 
     <script>
         class order {
@@ -38,6 +44,8 @@
         function dataStruc() {
             let line = [];
             let CustomerOrders = [];
+            let outputNames = '';
+            let outputOrders = '';
 
             for (let iCount = 0; iCount < 100; iCount++) {
                 line.push(new customer());
@@ -64,8 +72,12 @@
             })
 
             for (let iOrder = 0; iOrder < CustomerOrders.length; iOrder++) {
-                console.log(CustomerOrders[iOrder]);
+                outputNames = outputNames + CustomerOrders[iOrder][0] + '<br> <br>'
+                outputOrders = outputOrders + CustomerOrders[iOrder][1] + '<br> <br>'
             }
+
+            document.getElementById('outputNames').innerHTML = outputNames;
+            document.getElementById('outputOrders').innerHTML = outputOrders;
         }
     </script>
 </body>
