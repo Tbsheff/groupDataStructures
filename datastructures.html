@@ -4,14 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Structures</title>
+    <style>
+        /* Apply basic table styling */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            /* Adjust as needed */
+            margin: 0 auto;
+            /* Center the table on the page */
+        }
+
+        /* Style the table headers */
+        th {
+            background-color: #f2f2f2;
+            /* Light gray background */
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        /* Style the table data cells */
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        /* Add alternating row background color for better readability */
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Hover effect for rows */
+        tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        button {
+            background-color: #264e70;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 300ms;
+            display: block;
+            margin: auto;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            font-size: 2.5rem;
+        }
+
+        button:hover {
+
+            transform: scale(0.92);
+        }
+    </style>
 </head>
 <body>
     <button onclick="dataStruc()">Order Burgers</button>
 
-    <div style="display: flex; flex-direction:row; gap:6rem;">
-        <p id="outputNames"></p>
-        <p id="outputOrders"></p>
-    </div>
+
+    <table id="tableOutput" class="hidden">
+        <thead>
+            <tr>
+                <th>Customer</th>
+                <th>Burger Count</th>
+            </tr>
+        <tbody id="tableBody">
+
+        </tbody>
+        </thead>
+
+
+    </table>
 
 
     <script>
@@ -47,6 +118,14 @@
             let outputNames = '';
             let outputOrders = '';
 
+
+            let tableBodyOG = document.getElementById("tableBody");
+
+            // Remove all rows within the <tbody>
+            while (tableBodyOG.firstChild) {
+                tableBodyOG.removeChild(tableBodyOG.firstChild);
+            }
+
             for (let iCount = 0; iCount < 100; iCount++) {
                 line.push(new customer());
 
@@ -76,8 +155,29 @@
                 outputOrders = outputOrders + CustomerOrders[iOrder][1] + '<br> <br>'
             }
 
-            document.getElementById('outputNames').innerHTML = outputNames;
-            document.getElementById('outputOrders').innerHTML = outputOrders;
+            let tableBody = document.querySelector('#tableOutput tbody');
+
+            // Loop through the data array
+            CustomerOrders.forEach(item => {
+                // Create a new table row
+                let newRow = document.createElement('tr');
+
+                // Create and populate table data cells for each property in the data
+                let nameCell = document.createElement('td');
+                nameCell.textContent = item[0];
+                let orderCell = document.createElement('td');
+                orderCell.textContent = item[1];
+
+                // Append the data cells to the new row
+                newRow.appendChild(nameCell);
+                newRow.appendChild(orderCell);
+
+                // Append the new row to the table's <tbody>
+                tableBody.appendChild(newRow);
+            });
+
+            document.getElementById('tableOutput').classList.remove('hidden');
+
         }
     </script>
 </body>
