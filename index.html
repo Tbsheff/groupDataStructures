@@ -144,18 +144,21 @@ and outputted to the DOM-->
             CustomerOrders.push([line[0].customer_name, line[0].order.burger_count]);
 
             // loop through queue and add to customers array if not already found. If customer exists, add burgers to customer's order
-            for (let iCount = 0; iCount < line.length; iCount++) {
+            while (line.length > 0) {
                 let bNew = true;
                 for (let iOrder = 0; iOrder < CustomerOrders.length; iOrder++) {
-                    if (line[iCount].customer_name === CustomerOrders[iOrder][0]) {
-                        CustomerOrders[iOrder][1] += line[iCount].order.burger_count;
+                    if (line[0].customer_name === CustomerOrders[iOrder][0]) {
+                        CustomerOrders[iOrder][1] += line[0].order.burger_count;
                         bNew = false;
                         break;
+                        line.shift();
                     }
 
                 }
-                if (bNew === true) CustomerOrders.push([line[iCount].customer_name, line[iCount].order.burger_count]);
+                if (bNew === true) CustomerOrders.push([line[0].customer_name, line[0].order.burger_count]);
+                line.shift();
             }
+
 
             // sort the customer's based off number of burgers
             CustomerOrders.sort((iBurgers1, iBurgers2) => {
