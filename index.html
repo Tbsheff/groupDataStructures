@@ -1,3 +1,8 @@
+<!-- Tyler Sheffield, Allan Foote, Rai Martin, Mikayla Randall 
+Section 2
+This program randomly assigns a number or burgers for 100 customers in a queue. Then, the burgers are grouped by the distinct customers
+and outputted to the DOM-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,33 +15,26 @@
             border-collapse: collapse;
             width: 100%;
             max-width: 600px;
-            /* Adjust as needed */
             margin: 0 auto;
-            /* Center the table on the page */
         }
 
-        /* Style the table headers */
         th {
             background-color: #f2f2f2;
-            /* Light gray background */
             text-align: left;
             padding: 8px;
             border: 1px solid #ccc;
         }
 
-        /* Style the table data cells */
         td {
             text-align: left;
             padding: 8px;
             border: 1px solid #ccc;
         }
 
-        /* Add alternating row background color for better readability */
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
 
-        /* Hover effect for rows */
         tr:hover {
             background-color: #e0e0e0;
         }
@@ -45,6 +43,7 @@
             display: none;
         }
 
+        /* Style button */
         button {
             background-color: #264e70;
             color: #ffffff;
@@ -67,9 +66,11 @@
     </style>
 </head>
 <body>
-    <button onclick="dataStruc()">Order Burgers</button>
+
+    <button onclick="dataStruc()">Order Burgers</button> <!-- Button to call function -->
 
 
+    <!-- Table wrapper and header -->
     <table id="tableOutput" class="hidden">
         <thead>
             <tr>
@@ -86,6 +87,7 @@
 
 
     <script>
+        // Order class creates random num of burgers
         class order {
             constructor() {
                 this.burger_count = this.randomBurgers();
@@ -94,7 +96,7 @@
                 return Math.floor(Math.random() * 20) + 1;
             }
         }
-
+        // person class assigns random  name
         class person {
             constructor() {
                 this.customer_name = this.randomName();
@@ -106,19 +108,25 @@
             }
         }
 
+
+        // person class inherits from person class and creates an order for customer 
         class customer extends person {
             constructor() {
                 super();
                 this.order = new order();
             }
         }
+
+        // main function
         function dataStruc() {
+
+            // initialize global variables
             let line = [];
             let CustomerOrders = [];
             let outputNames = '';
             let outputOrders = '';
 
-
+            // table body tag
             let tableBodyOG = document.getElementById("tableBody");
 
             // Remove all rows within the <tbody>
@@ -126,13 +134,16 @@
                 tableBodyOG.removeChild(tableBodyOG.firstChild);
             }
 
+            // add 100 customers to the queue
             for (let iCount = 0; iCount < 100; iCount++) {
                 line.push(new customer());
 
             }
 
+            // add first customer
             CustomerOrders.push([line[0].customer_name, line[0].order.burger_count]);
 
+            // loop through queue and add to customers array if not already found. If customer exists, add burgers to customer's order
             for (let iCount = 0; iCount < line.length; iCount++) {
                 let bNew = true;
                 for (let iOrder = 0; iOrder < CustomerOrders.length; iOrder++) {
@@ -146,15 +157,12 @@
                 if (bNew === true) CustomerOrders.push([line[iCount].customer_name, line[iCount].order.burger_count]);
             }
 
+            // sort the customer's based off number of burgers
             CustomerOrders.sort((iBurgers1, iBurgers2) => {
                 return iBurgers2[1] - iBurgers1[1]
             })
 
-            for (let iOrder = 0; iOrder < CustomerOrders.length; iOrder++) {
-                outputNames = outputNames + CustomerOrders[iOrder][0] + '<br> <br>'
-                outputOrders = outputOrders + CustomerOrders[iOrder][1] + '<br> <br>'
-            }
-
+            // Select table body
             let tableBody = document.querySelector('#tableOutput tbody');
 
             // Loop through the data array
@@ -176,6 +184,7 @@
                 tableBody.appendChild(newRow);
             });
 
+            // make table visible on click
             document.getElementById('tableOutput').classList.remove('hidden');
 
         }
